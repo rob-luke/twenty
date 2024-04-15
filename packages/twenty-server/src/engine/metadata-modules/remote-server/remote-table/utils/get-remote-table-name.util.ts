@@ -1,4 +1,6 @@
+import { singular } from 'pluralize';
+
 import { camelCase } from 'src/utils/camel-case';
 
 export const getRemoteTableName = (distantTableName: string) =>
-  `${camelCase(distantTableName)}Remote`;
+  singular(camelCase(distantTableName));

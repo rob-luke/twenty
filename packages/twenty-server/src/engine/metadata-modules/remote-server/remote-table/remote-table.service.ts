@@ -2,6 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
+import { pluralize } from 'pluralize';
 
 import {
   RemoteServerType,
@@ -191,9 +192,9 @@ export class RemoteTableService {
 
     const objectMetadata = await this.objectMetadataService.createOne({
       nameSingular: remoteTableName,
-      namePlural: `${remoteTableName}s`,
+      namePlural: pluralize(remoteTableName),
       labelSingular: remoteTableLabel,
-      labelPlural: `${remoteTableLabel}s`,
+      labelPlural: pluralize(remoteTableLabel),
       description: 'Remote table',
       dataSourceId: dataSourceMetatada.id,
       workspaceId: workspaceId,
