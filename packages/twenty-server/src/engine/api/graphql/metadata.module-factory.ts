@@ -9,6 +9,8 @@ import { MetadataGraphQLApiModule } from 'src/engine/api/graphql/metadata-graphq
 import { renderApolloPlayground } from 'src/engine/utils/render-apollo-playground.util';
 import { DataloaderService } from 'src/engine/dataloaders/dataloader.service';
 
+// const cache = createInMemoryCache();
+
 export const metadataModuleFactory = async (
   environmentService: EnvironmentService,
   exceptionHandlerService: ExceptionHandlerService,
@@ -32,6 +34,10 @@ export const metadataModuleFactory = async (
       useExceptionHandler({
         exceptionHandlerService,
       }),
+      // useResponseCache({
+      //   session: (request) => request.headers.get('authorization'),
+      //   cache,
+      // }),
     ],
     path: '/metadata',
     context: () => ({

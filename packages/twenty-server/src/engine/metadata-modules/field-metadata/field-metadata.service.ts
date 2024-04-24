@@ -27,7 +27,6 @@ import { WorkspaceMigrationFactory } from 'src/engine/metadata-modules/workspace
 import { computeObjectTargetTable } from 'src/engine/utils/compute-object-target-table.util';
 import { generateMigrationName } from 'src/engine/metadata-modules/workspace-migration/utils/generate-migration-name.util';
 import { generateNullable } from 'src/engine/metadata-modules/field-metadata/utils/generate-nullable';
-import { FieldMetadataDTO } from 'src/engine/metadata-modules/field-metadata/dtos/field-metadata.dto';
 import {
   RelationDefinitionDTO,
   RelationDefinitionType,
@@ -39,6 +38,7 @@ import {
 import { DeleteOneFieldInput } from 'src/engine/metadata-modules/field-metadata/dtos/delete-field.input';
 import { computeColumnName } from 'src/engine/metadata-modules/field-metadata/utils/compute-column-name.util';
 import { assertMutationNotOnRemoteObject } from 'src/engine/metadata-modules/object-metadata/utils/assert-mutation-not-on-remote-object.util';
+import { IDataloaders } from 'src/engine/dataloaders/dataloader.interface';
 
 import {
   FieldMetadataEntity,
@@ -487,16 +487,33 @@ export class FieldMetadataService extends TypeOrmQueryService<FieldMetadataEntit
     return fieldMetadataInputOverrided as UpdateFieldInput;
   }
 
-  public async getRelationDefinitionFromRelationMetadata(
-    fieldMetadataDTO: FieldMetadataDTO,
-    relationMetadata: RelationMetadataEntity,
+  public async getRelationDefinition(
+    fieldMetadataId: string,
+    fieldMetadataType: FieldMetadataType,
+    loaders: IDataloaders,
   ): Promise<RelationDefinitionDTO | null> {
-    if (fieldMetadataDTO.type !== FieldMetadataType.RELATION) {
+    if (fieldMetadataType !== FieldMetadataType.RELATION) {
       return null;
     }
 
+    const relationMetadataItem =
+      await loaders.relationMetadataLoader.load(fieldMetadataId);
+
+    const relationDefinition =
+      await this.getRelationDefinitionFromRelationMetadata(
+        fieldMetadataId,
+        relationMetadataItem,
+      );
+
+    return relationDefinition;
+  }
+
+  private async getRelationDefinitionFromRelationMetadata(
+    fieldMetadataId: string,
+    relationMetadata: RelationMetadataEntity,
+  ): Promise<RelationDefinitionDTO | null> {
     const isRelationFromSource =
-      relationMetadata.fromFieldMetadata.id === fieldMetadataDTO.id;
+      relationMetadata.fromFieldMetadata.id === fieldMetadataId;
 
     // TODO: implement MANY_TO_MANY
     if (relationMetadata.relationType === RelationMetadataType.MANY_TO_MANY) {

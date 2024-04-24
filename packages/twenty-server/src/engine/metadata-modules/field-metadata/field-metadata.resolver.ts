@@ -93,18 +93,11 @@ export class FieldMetadataResolver {
     @Parent() fieldMetadata: FieldMetadataDTO,
     @Context() context: { loaders: IDataloaders },
   ): Promise<RelationDefinitionDTO | null> {
-    if (fieldMetadata.type !== FieldMetadataType.RELATION) {
-      return null;
-    }
-
-    const relationMetadataItem =
-      await context.loaders.relationMetadataLoader.load(fieldMetadata.id);
-
-    const relationDefinition =
-      await this.fieldMetadataService.getRelationDefinitionFromRelationMetadata(
-        fieldMetadata,
-        relationMetadataItem,
-      );
+    const relationDefinition = this.fieldMetadataService.getRelationDefinition(
+      fieldMetadata.id,
+      fieldMetadata.type,
+      context.loaders,
+    );
 
     return relationDefinition;
   }

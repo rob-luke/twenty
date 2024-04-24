@@ -51,6 +51,7 @@ import { ObjectMetadataDTO } from './dtos/object-metadata.dto';
           ServiceClass: ObjectMetadataService,
           pagingStrategy: PagingStrategies.CURSOR,
           read: {
+            // disabled: true,
             defaultSort: [{ field: 'id', direction: SortDirection.DESC }],
           },
           create: {

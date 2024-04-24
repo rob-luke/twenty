@@ -4878,6 +4878,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@envelop/response-cache@npm:^6.1.2":
+  version: 6.1.2
+  resolution: "@envelop/response-cache@npm:6.1.2"
+  dependencies:
+    "@graphql-tools/utils": "npm:^10.0.3"
+    "@whatwg-node/fetch": "npm:^0.9.0"
+    fast-json-stable-stringify: "npm:^2.1.0"
+    lru-cache: "npm:^10.0.0"
+    tslib: "npm:^2.5.0"
+  peerDependencies:
+    "@envelop/core": ^5.0.0
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+  checksum: 60c3304e819997ff584314c2fae82d88e603f031e3b2965f4ac5e94e5350462da9785a381e5e1c9d3379923b24c9d2f36b57f9e10bd80e0c97546a540c47c726
+  languageName: node
+  linkType: hard
+
 "@envelop/types@npm:4.0.1":
   version: 4.0.1
   resolution: "@envelop/types@npm:4.0.1"
@@ -6746,6 +6762,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-tools/utils@npm:^10.0.3":
+  version: 10.1.3
+  resolution: "@graphql-tools/utils@npm:10.1.3"
+  dependencies:
+    "@graphql-typed-document-node/core": "npm:^3.1.1"
+    cross-inspect: "npm:1.0.0"
+    dset: "npm:^3.1.2"
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: 657e0758b3cfcbccbaa0c5bf81277c03e02bda32070e71e9f7f728ad692893ef0a0c4bc873b6972edf0b96d0d6397df6e55a8db3e2050bd9c00f6a5bf8881858
+  languageName: node
+  linkType: hard
+
 "@graphql-tools/utils@npm:^7.6.0":
   version: 7.10.0
   resolution: "@graphql-tools/utils@npm:7.10.0"
@@ -6838,6 +6868,18 @@ __metadata:
     graphql: ^15.0.0 || ^16.0.0
     graphql-yoga: ^4.0.4
   checksum: 333501a04f79ef158cd92e240abecf1056ea12e8f63345758d6f79bbd88d923846fac44940765ae48a1b05d108107e3ba1539eea1092802c5bdf74bf166ea16a
+  languageName: node
+  linkType: hard
+
+"@graphql-yoga/plugin-response-cache@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "@graphql-yoga/plugin-response-cache@npm:3.5.0"
+  dependencies:
+    "@envelop/response-cache": "npm:^6.1.2"
+  peerDependencies:
+    graphql: ^15.2.0 || ^16.0.0
+    graphql-yoga: ^5.3.0
+  checksum: 67e338473bcb0637eef99fe1ed308c32be613106da1cafc3ccf925a16e694086eb62a054597846bb35d6b22cd9df72ee61a170e5bb864d2eed680f7917c0b1d4
   languageName: node
   linkType: hard
 
@@ -18202,6 +18244,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@whatwg-node/fetch@npm:^0.9.0":
+  version: 0.9.17
+  resolution: "@whatwg-node/fetch@npm:0.9.17"
+  dependencies:
+    "@whatwg-node/node-fetch": "npm:^0.5.7"
+    urlpattern-polyfill: "npm:^10.0.0"
+  checksum: 6638f1d456d17c9eab55f6278aa8045157ceb43a27acc65def1b7a2a3b80ef1b79f4c203e523865c9bcf1236ef64e1378ab0627e91932c97e9f1f3a129b17195
+  languageName: node
+  linkType: hard
+
 "@whatwg-node/fetch@npm:^0.9.10, @whatwg-node/fetch@npm:^0.9.7":
   version: 0.9.15
   resolution: "@whatwg-node/fetch@npm:0.9.15"
@@ -18235,6 +18287,19 @@ __metadata:
     fast-querystring: "npm:^1.1.1"
     tslib: "npm:^2.3.1"
   checksum: 8a2f2c5a4138b734a45db93899fe5304e7b7821d4a8708bcd10ad860988381acb76907d2b21aa867f784760393c9da68105e8052b7e371d9acf208c9668822b2
+  languageName: node
+  linkType: hard
+
+"@whatwg-node/node-fetch@npm:^0.5.7":
+  version: 0.5.10
+  resolution: "@whatwg-node/node-fetch@npm:0.5.10"
+  dependencies:
+    "@kamilkisiela/fast-url-parser": "npm:^1.1.4"
+    "@whatwg-node/events": "npm:^0.1.0"
+    busboy: "npm:^1.6.0"
+    fast-querystring: "npm:^1.1.1"
+    tslib: "npm:^2.3.1"
+  checksum: 7b11e8848433bda4f9f9c5030df04f7a830555b36cd8b21fbdc33492d4f0f394f83e4a981d33d35d7dee54becae7cd71e8153d5a19512f2cd2d91868bf6c97a0
   languageName: node
   linkType: hard
 
@@ -46368,6 +46433,7 @@ __metadata:
     "@graphql-codegen/typescript-operations": "npm:^3.0.4"
     "@graphql-codegen/typescript-react-apollo": "npm:^3.3.7"
     "@graphql-tools/schema": "npm:^10.0.0"
+    "@graphql-yoga/plugin-response-cache": "npm:^3.5.0"
     "@hello-pangea/dnd": "npm:^16.2.0"
     "@hookform/resolvers": "npm:^3.1.1"
     "@jsdevtools/rehype-toc": "npm:^3.0.2"
@@ -47624,6 +47690,13 @@ __metadata:
     punycode: "npm:^1.4.1"
     qs: "npm:^6.11.2"
   checksum: 7546b878ee7927cfc62ca21dbe2dc395cf70e889c3488b2815bf2c63355cb3c7db555128176a01b0af6cccf265667b6fd0b4806de00cb71c143c53986c08c602
+  languageName: node
+  linkType: hard
+
+"urlpattern-polyfill@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "urlpattern-polyfill@npm:10.0.0"
+  checksum: 43593f2a89bd54f2d5b5105ef4896ac5c5db66aef723759fbd15cd5eb1ea6cdae9d112e257eda9bbc3fb0cd90be6ac6e9689abe4ca69caa33114f42a27363531
   languageName: node
   linkType: hard
 
