@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { GraphQLSchema } from 'graphql';
+
 import { CacheStorageService } from 'src/engine/integrations/cache-storage/cache-storage.service';
 import { InjectCacheStorage } from 'src/engine/integrations/cache-storage/decorators/cache-storage.decorator';
 import { CacheStorageNamespace } from 'src/engine/integrations/cache-storage/types/cache-storage-namespace.enum';
@@ -8,12 +10,16 @@ import { WorkspaceCacheVersionService } from 'src/engine/metadata-modules/worksp
 
 @Injectable()
 export class WorkspaceSchemaStorageService {
+  private executableSchemaCache: { [workspaceId: string]: GraphQLSchema };
+
   constructor(
     @InjectCacheStorage(CacheStorageNamespace.WorkspaceSchema)
     private readonly workspaceSchemaCache: CacheStorageService,
 
     private readonly workspaceCacheVersionService: WorkspaceCacheVersionService,
-  ) {}
+  ) {
+    this.executableSchemaCache = {};
+  }
 
   async validateCacheVersion(workspaceId: string): Promise<void> {
     const currentVersion =
@@ -83,6 +89,14 @@ export class WorkspaceSchemaStorageService {
     return this.workspaceSchemaCache.get<string[]>(
       `usedScalarNames:${workspaceId}`,
     );
+  }
+
+  setExecutableSchema(workspaceId: string, schema: GraphQLSchema): void {
+    this.executableSchemaCache[workspaceId] = schema;
+  }
+
+  getExecutableSchema(workspaceId: string): GraphQLSchema {
+    return this.executableSchemaCache[workspaceId];
   }
 
   async invalidateCache(workspaceId: string): Promise<void> {
