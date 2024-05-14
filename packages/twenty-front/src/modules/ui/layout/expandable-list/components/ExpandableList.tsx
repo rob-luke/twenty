@@ -75,6 +75,8 @@ export const ExpandableList = ({
   // @see https://floating-ui.com/docs/useFloating#elements
   const [childrenContainerElement, setChildrenContainerElement] =
     useState<HTMLDivElement | null>(null);
+  const [previousChildrenContainerWidth, setPreviousChildrenContainerWidth] =
+    useState(childrenContainerElement?.clientWidth ?? 0);
 
   // Used with useListenClickOutside.
   const containerRef = useRef<HTMLDivElement>(null);
@@ -82,6 +84,8 @@ export const ExpandableList = ({
   const [firstHiddenChildIndex, setFirstHiddenChildIndex] = useState(
     children.length,
   );
+  const shouldComputeFirstHiddenChildIndex =
+    firstHiddenChildIndex === children.length;
 
   const hiddenChildrenCount = children.length - firstHiddenChildIndex;
   const canDisplayChipCount = isChipCountDisplayed && hiddenChildrenCount > 0;
@@ -105,7 +109,15 @@ export const ExpandableList = ({
   useListenClickOutside({
     refs: [containerRef],
     callback: () => {
-      resetFirstHiddenChildIndex();
+      // Handle container resize
+      if (
+        childrenContainerElement?.clientWidth !== previousChildrenContainerWidth
+      ) {
+        resetFirstHiddenChildIndex();
+        setPreviousChildrenContainerWidth(
+          childrenContainerElement?.clientWidth ?? 0,
+        );
+      }
     },
   });
 
@@ -127,18 +139,22 @@ export const ExpandableList = ({
         {children.slice(0, firstHiddenChildIndex).map((child, index) => (
           <StyledChildContainer
             key={index}
-            ref={(childElement) => {
-              if (
-                // First element is always displayed.
-                index > 0 &&
-                isFirstOverflowingChildElement({
-                  containerElement: childrenContainerElement,
-                  childElement,
-                })
-              ) {
-                setFirstHiddenChildIndex(index);
-              }
-            }}
+            ref={
+              shouldComputeFirstHiddenChildIndex
+                ? (childElement) => {
+                    if (
+                      // First element is always displayed.
+                      index > 0 &&
+                      isFirstOverflowingChildElement({
+                        containerElement: childrenContainerElement,
+                        childElement,
+                      })
+                    ) {
+                      setFirstHiddenChildIndex(index);
+                    }
+                  }
+                : undefined
+            }
           >
             {child}
           </StyledChildContainer>
